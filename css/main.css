@@ -1832,7 +1832,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ba4a3d;
+  background: #d9e2ff;
 }
 .feed-link,
 .chat {
@@ -2862,8 +2862,27 @@ ul.breadcrumb li+li:last-child {
     background-size: cover;
   }
 }
-.main-inner {
-  opacity: 0.8;
+@media (max-width: 991px) {
+  .main-inner {
+    opacity: 0.7;
+  }
+}
+@media (min-width: 992px) {
+  .main-inner {
+    opacity: 0.8;
+  }
+}
+@media (max-width: 991px) {
+  .site-meta {
+    background: #808080;
+    opacity: 1;
+  }
+}
+@media (min-width: 992px) {
+  .site-meta {
+    background: #6a5acd;
+    opacity: 0.85;
+  }
 }
 code {
   color: #ff7600;
