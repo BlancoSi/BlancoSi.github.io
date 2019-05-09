@@ -320,7 +320,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/05/09/centos6-supernode/" class="post-title-link" itemprop="url">centos6-supernode.md</a>
+                <a href="/2019/05/09/centos6-supernode/" class="post-title-link" itemprop="url">N2N简易食用指南</a>
               
             
           </h1>
@@ -345,7 +345,7 @@
                 
               
 
-              <time title="创建时间：2019-05-09 14:08:26 / 修改时间：14:10:25" itemprop="dateCreated datePublished" datetime="2019-05-09T14:08:26+08:00">2019-05-09</time>
+              <time title="创建时间：2019-05-09 14:08:26 / 修改时间：19:29:20" itemprop="dateCreated datePublished" datetime="2019-05-09T14:08:26+08:00">2019-05-09</time>
             
 
             
@@ -386,64 +386,74 @@
       
         
           
-            <h1 id="N2N简易食用指南"><a href="#N2N简易食用指南" class="headerlink" title="N2N简易食用指南"></a>N2N简易食用指南</h1><h2 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h2><pre><code>1. N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。
-2. N2N是基于P2P协议之上的两个私有网络间的加密层。
-3. 加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。
-4. 每个n2n用户可以同时隶属于多个网络
-</code></pre><h2 id="N2N架构组件："><a href="#N2N架构组件：" class="headerlink" title="N2N架构组件："></a>N2N架构组件：</h2><pre><code>1. Supernode：超级节点
-    它在edge节点间建立握手，或为位于防火墙之后的节点中转数据。它的基础作用是注册节点的网络路径，并为不能直通的节点做路由，能够直通的节点间通信，是P2P的。
-2. Edge：边缘（节点）
-    用户PC机上安装的用于建立n2n网络的软件。几乎每个edge节点都会建立一个tun/tap设备，作为接入n2n网络的入口。
-原理：super node提供场所，让两个位于NAT/防火墙之后的edge node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge node之间，如果有一方的NAT属于对称型(symmetrical)，supernode则还需继续为双方提供数据包的转发;edge node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。
-</code></pre><h2 id="源码地址："><a href="#源码地址：" class="headerlink" title="源码地址："></a>源码地址：</h2><pre><code>https://github.com/meyerd/n2n.git
-
-注1：此源码地址为n2n的开发分支，meyerd/n2n，官方即ntop/n2n的源码是不能编译的，因为部分源文件被放到了legacy文件夹，而CMakeList.txt文件里还包含有部分这些文件（应该是还在开发）所以make会报错，而meyerd/n2n没有这种问题。
-
-注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。
-
-注3：n2n目前有v1 v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。
-</code></pre><h2 id="本人使用环境："><a href="#本人使用环境：" class="headerlink" title="本人使用环境："></a>本人使用环境：</h2><pre><code>Supernode：vultr上的64位centos6
-Edge：win10
-</code></pre><h2 id="配置Supernode端："><a href="#配置Supernode端：" class="headerlink" title="配置Supernode端："></a>配置Supernode端：</h2><pre><code>1. 建立或者使用已有的vps，然后用Xshell或者JuiceSSH连接到vps
-2. yum install gcc gcc-c++ openssl-devel git cmake
-3. 下载源码
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/meyerd/n2n.git</span><br></pre></td></tr></table></figure>
-<pre><code>4. 编译安装：
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">		cd n2n/n2n_v2</span><br><span class="line">		mkdir build</span><br><span class="line">		cd build</span><br><span class="line">		cmake ..</span><br><span class="line">		make</span><br><span class="line">	//不install也行，不过需要在n2n/n2n_v2/build文件夹里面运行，而且要加./前缀</span><br><span class="line">	//如./supernode -l 5000</span><br><span class="line">		make install</span><br><span class="line">		cd</span><br><span class="line">```		</span><br><span class="line"></span><br><span class="line">	5. 测试下能不能开启Supernode服务：</span><br></pre></td></tr></table></figure>
-<pre><code>    supernode -l 5000 -f
-//-f为前台运行，关闭终端或ctrl+c来停止服务
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">6. 开放端口：</span><br></pre></td></tr></table></figure>
-<pre><code>    /sbin/iptables -I INPUT -p tcp --dport 5000 -j ACCEPT
-    /sbin/iptables -I INPUT -p udp --dport 5000 -j ACCEPT
-    /sbin/iptables -I INPUT -p udp --dport 5645 -j ACCEPT
-//5645换成53也行，原理暂时不明
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">7. 查看端口状态：</span><br></pre></td></tr></table></figure>
-<pre><code>/etc/init.d/iptables status
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">8. 保存端口设置：</span><br></pre></td></tr></table></figure>
-<pre><code>    /etc/rc.d/init.d/iptables save
-//不保存也行，不过每次重启都要再次开放端口
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">	9. 开启supernode：</span><br><span class="line">	</span><br><span class="line">```	</span><br><span class="line">		cd n2n/n2n_v2/build</span><br><span class="line">		./supernode 5000</span><br></pre></td></tr></table></figure>
-<pre><code>10. （可选）在服务器上开启edge：
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./edge -a 10.0.0.0 -c 群组名 -k 此处密码 -l supernode的IP地址:5000</span><br></pre></td></tr></table></figure>
-<h2 id="配置Edge端："><a href="#配置Edge端：" class="headerlink" title="配置Edge端："></a>配置Edge端：</h2><pre><code>1. 我用的是GitHub Desktop，所以这里直接把n2n源码clone下来，你也可以去直接下载zip包
-
-2. 编译：
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	cd E:\github\n2n_meyerd\n2n_v2</span><br><span class="line">	md build</span><br><span class="line">	cmake ..</span><br><span class="line">//cmake这步也可以用Cmake-GUI代替</span><br><span class="line"></span><br><span class="line">//注：由于种种原因微软vs中的MSBuild在Powershell下的操作默认是不开放的，</span><br><span class="line">//默认情况下只能在Developer command prompt中使用（在开始菜单的vs项目里面），</span><br><span class="line">//而配置Powershell下使用也会很麻烦，所以不推荐使用。</span><br><span class="line"></span><br><span class="line">	打开build文件夹中的n2n.sln</span><br><span class="line">	生成项目ALL_BUILD</span><br><span class="line">	生成完成之后就可以在Release文件夹中看到edge.exe和supernode.exe等文件了</span><br><span class="line"></span><br><span class="line">//~~没卵用的题外话：官方即ntop/n2n的源码cmake时会报错，请关闭CMakeList.txt文件中的ssl~~</span><br></pre></td></tr></table></figure>
-<pre><code>3. win10（最好在管理员限权）powershell开启edge：
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd E:\github\n2n_meyerd\n2n_v2\build\Release</span><br><span class="line">.\edge -a 10.0.0.100 -c 群组名 -k 此处密码 -l supernode的IP地址:5000</span><br></pre></td></tr></table></figure>
-<h2 id="至于命令的用法："><a href="#至于命令的用法：" class="headerlink" title="至于命令的用法："></a>至于命令的用法：</h2><pre><code>1.
-    sudo ./edge -d n2n0 -c mynetwork -k encryptme -u 99 -g 99 -m 3C:A0:12:34:56:78 -a 1.2.3.4 -l a.b.c.d:xyw
-    或者
-    N2N_KEY=encryptme sudo ./edge -d n2n0 -c mynetwork -u 99 -g 99 -m 3C:A0:12:34:56:78 -a 1.2.3.4 -l a.b.c.d:xyw
-
-2. you can join a private network with your friends by:
-    1.same -l parameter, connect to same a supernode
-    2.same -c and -k parameters, you can understand as &quot;open same a lock with the same key&quot;
-    3.difference -a parameter, also difference -m parameter if you specified
-    4.difference -d parameter with your local existed network interface card
-
-3. 注意在powershell下 ./ 要用 .\ 代替
-</code></pre><h2 id="请参考："><a href="#请参考：" class="headerlink" title="请参考："></a>请参考：</h2><pre><code>1. https://github.com/meyerd/n2n/wiki/run
+            <h1 id="N2N简易食用指南"><a href="#N2N简易食用指南" class="headerlink" title="N2N简易食用指南"></a>N2N简易食用指南</h1><h2 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h2><ol>
+<li>N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。</li>
+<li>N2N是基于P2P协议之上的两个私有网络间的加密层。</li>
+<li>加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。</li>
+<li>每个n2n用户可以同时隶属于多个网络</li>
+</ol>
+<h2 id="N2N架构组件："><a href="#N2N架构组件：" class="headerlink" title="N2N架构组件："></a>N2N架构组件：</h2><ol>
+<li>Supernode：超级节点<br>它在edge节点间建立握手，或为位于防火墙之后的节点中转数据。它的基础作用是注册节点的网络路径，并为不能直通的节点做路由，能够直通的节点间通信，是P2P的。</li>
+<li>Edge：边缘（节点）<br>用户PC机上安装的用于建立n2n网络的软件。几乎每个edge节点都会建立一个tun/tap设备，作为接入n2n网络的入口。<h3 id="原理：super-node提供场所，让两个位于NAT-防火墙之后的edge-node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge-node之间，如果有一方的NAT属于对称型-symmetrical-，supernode则还需继续为双方提供数据包的转发-edge-node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。"><a href="#原理：super-node提供场所，让两个位于NAT-防火墙之后的edge-node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge-node之间，如果有一方的NAT属于对称型-symmetrical-，supernode则还需继续为双方提供数据包的转发-edge-node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。" class="headerlink" title="原理：super node提供场所，让两个位于NAT/防火墙之后的edge node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge node之间，如果有一方的NAT属于对称型(symmetrical)，supernode则还需继续为双方提供数据包的转发;edge node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。"></a>原理：super node提供场所，让两个位于NAT/防火墙之后的edge node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge node之间，如果有一方的NAT属于对称型(symmetrical)，supernode则还需继续为双方提供数据包的转发;edge node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。</h3></li>
+</ol>
+<h2 id="源码地址："><a href="#源码地址：" class="headerlink" title="源码地址："></a>源码地址：</h2><h3 id="https-github-com-meyerd-n2n-git"><a href="#https-github-com-meyerd-n2n-git" class="headerlink" title="https://github.com/meyerd/n2n.git"></a><code>https://github.com/meyerd/n2n.git</code></h3><h4 id="注1：此源码地址为n2n的开发分支，meyerd-n2n，由于不明原因，官方即ntop-n2n的源码是不能编译的。"><a href="#注1：此源码地址为n2n的开发分支，meyerd-n2n，由于不明原因，官方即ntop-n2n的源码是不能编译的。" class="headerlink" title="注1：此源码地址为n2n的开发分支，meyerd/n2n，由于不明原因，官方即ntop/n2n的源码是不能编译的。"></a>注1：此源码地址为n2n的开发分支，meyerd/n2n，由于不明原因，官方即ntop/n2n的源码是不能编译的。</h4><h4 id="注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。"><a href="#注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。" class="headerlink" title="注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。"></a>注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。</h4><h4 id="注3：n2n目前有v1-v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。"><a href="#注3：n2n目前有v1-v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。" class="headerlink" title="注3：n2n目前有v1 v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。"></a>注3：n2n目前有v1 v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。</h4><h2 id="本人使用环境："><a href="#本人使用环境：" class="headerlink" title="本人使用环境："></a>本人使用环境：</h2><ol>
+<li>Supernode：vultr上的64位centos6</li>
+<li>Edge：win10</li>
+</ol>
+<h2 id="配置Supernode端："><a href="#配置Supernode端：" class="headerlink" title="配置Supernode端："></a>配置Supernode端：</h2><ol>
+<li>建立或者使用已有的vps，然后用Xshell或者JuiceSSH连接到vps</li>
+<li>yum install gcc gcc-c++ openssl-devel git cmake</li>
+<li><p>下载源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/meyerd/n2n.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译安装：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	cd n2n/n2n_v2</span><br><span class="line">	mkdir build</span><br><span class="line">	cd build</span><br><span class="line">	cmake ..</span><br><span class="line">	make</span><br><span class="line">//不install也行，不过需要在n2n/n2n_v2/build文件夹里面运行，而且要加./前缀</span><br><span class="line">//如./supernode -l 5000</span><br><span class="line">	make install</span><br><span class="line">	cd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试下能不能开启Supernode服务：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">	supernode -l 5000 -f</span><br><span class="line">//-f为前台运行，关闭终端或ctrl+c来停止服务</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开放端口：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">	/sbin/iptables -I INPUT -p tcp --dport 5000 -j ACCEPT</span><br><span class="line">	/sbin/iptables -I INPUT -p udp --dport 5000 -j ACCEPT</span><br><span class="line">	/sbin/iptables -I INPUT -p udp --dport 5645 -j ACCEPT</span><br><span class="line">//5645换成53也行，原理暂时不明</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看端口状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/iptables status</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保存端口设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">	/etc/rc.d/init.d/iptables save</span><br><span class="line">//不保存也行，不过每次重启都要再次开放端口</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启supernode：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd n2n/n2n_v2/build</span><br><span class="line">./supernode 5000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（可选）在服务器上开启edge：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./edge -a 10.0.0.0 -c 群组名 -k 此处密码 -l supernode的IP地址:5000</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="配置Edge端："><a href="#配置Edge端：" class="headerlink" title="配置Edge端："></a>配置Edge端：</h2><ol>
+<li>我用的是GitHub Desktop，所以这里直接把n2n源码clone下来，你也可以去直接下载zip包</li>
+<li>cmake（也可以用Cmake-GUI代替）：    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd E:\github\n2n_meyerd\n2n_v2</span><br><span class="line">md build</span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>注：由于种种原因微软vs中的MSBuild在Powershell下的操作默认是不开放的，默认情况下只能在Developer command prompt中使用（在开始菜单的vs项目里面），而配置Powershell下使用也会很麻烦，所以不推荐使用。</p>
+<ol start="3">
+<li>编译：<blockquote>
+</blockquote>
+<pre><code>打开build文件夹中的n2n.sln
+生成项目ALL_BUILD
+生成完成之后就可以在Release文件夹中看到edge.exe和supernode.exe等文件了
+</code></pre><blockquote>
+</blockquote>
+ //<del>没卵用的题外话：官方即ntop/n2n的源码cmake时会报错，请关闭CMakeList.txt文件中的ssl</del></li>
+<li>win10（最好在管理员限权）powershell开启edge：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd E:\github\n2n_meyerd\n2n_v2\build\Release</span><br><span class="line">.\edge -a 10.0.0.100 -c 群组名 -k 此处密码 -l supernode的IP地址:5000</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="至于命令的用法："><a href="#至于命令的用法：" class="headerlink" title="至于命令的用法："></a>至于命令的用法：</h2><h3 id="1-一般命令行用法："><a href="#1-一般命令行用法：" class="headerlink" title="1. 一般命令行用法："></a>1. 一般命令行用法：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ./edge -d n2n0 -c mynetwork -k encryptme -u 99 -g 99 -m 3C:A0:12:34:56:78 -a 1.2.3.4 -l a.b.c.d:xyw</span><br><span class="line">或者</span><br><span class="line">N2N_KEY=encryptme sudo ./edge -d n2n0 -c mynetwork -u 99 -g 99 -m 3C:A0:12:34:56:78 -a 1.2.3.4 -l a.b.c.d:xyw</span><br></pre></td></tr></table></figure>
+<h3 id="2-you-can-join-a-private-network-with-your-friends-by"><a href="#2-you-can-join-a-private-network-with-your-friends-by" class="headerlink" title="2. you can join a private network with your friends by:"></a>2. you can join a private network with your friends by:</h3><ol>
+<li>same -l parameter, connect to same a supernode</li>
+<li>same -c and -k parameters, you can understand as “open same a lock with the same key”</li>
+<li>difference -a parameter, also difference -m parameter if you specified</li>
+<li>difference -d parameter with your local existed network interface card</li>
+</ol>
+<h3 id="3-注意在powershell下-要用-代替"><a href="#3-注意在powershell下-要用-代替" class="headerlink" title="3. 注意在powershell下 ./ 要用 .\ 代替"></a>3. 注意在powershell下 ./ 要用 .\ 代替</h3><h2 id="请参考："><a href="#请参考：" class="headerlink" title="请参考："></a>请参考：</h2><pre><code>1. https://github.com/meyerd/n2n/wiki/run
 2. https://github.com/ntop/n2n
 3. https://www.baidu.com/
 </code></pre>
@@ -564,7 +574,7 @@ Edge：win10
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-09 14:14:10" itemprop="dateModified" datetime="2019-05-09T14:14:10+08:00">2019-05-09</time>
+                <time title="修改时间：2019-05-09 19:15:29" itemprop="dateModified" datetime="2019-05-09T19:15:29+08:00">2019-05-09</time>
               
             
           </span>
@@ -605,79 +615,26 @@ Edge：win10
 <p>但是我们可以把本地文件提交到github中。<strong>你可能已经注意到，hexo init生成的博客文件夹里面有.gitignore文件。</strong></p>
 <p>对于经常使用Git的朋友来说，.gitignore配置一定不会陌生。这种方式通过在项目的某个文件夹下定义.gitignore文件，<br>在该文件中定义相应的忽略规则，来管理当前文件夹下的文件的Git提交行为。<br>.gitingore 文件中，应该遵循相应语法，在每一行指定一个忽略规则。</p>
 <p>比如：（这里内容表示忽略此目录下log、temp后缀文件和vendor文件夹）</p>
-<blockquote>
-<blockquote>
-<blockquote>
-</blockquote>
-<pre><code>*.log
-*.temp
-/vendor
-</code></pre><blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*.log</span><br><span class="line">*.temp</span><br><span class="line">/vendor</span><br></pre></td></tr></table></figure>
 <p><strong>表明官方是希望我们把本地文件通过git保存到github等保管服务器的。</strong></p>
 <p>下面介绍在博客仓库里面备份本地文件的方法。</p>
 <hr>
-<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="0-不要随便sudo，真的会有很多麻烦。不要问我怎么知道的。"><a href="#0-不要随便sudo，真的会有很多麻烦。不要问我怎么知道的。" class="headerlink" title="0. 不要随便sudo，真的会有很多麻烦。不要问我怎么知道的。"></a>0. 不要随便sudo，真的会有很多麻烦。<del>不要问我怎么知道的。</del></h3><pre><code>比如：一般默认是无法以root用户直接登录图形界面的，意味着用sudo创建的文件只能用命令行sudo权限来编辑，且用root登录图形界面，只会变得更麻烦。
-</code></pre><h3 id="1-最好安装oh-my-zsh，方便看目前所在的分支，因为我们会在两个分支内操作。具体看官方github的readme。"><a href="#1-最好安装oh-my-zsh，方便看目前所在的分支，因为我们会在两个分支内操作。具体看官方github的readme。" class="headerlink" title="1. 最好安装oh-my-zsh，方便看目前所在的分支，因为我们会在两个分支内操作。具体看官方github的readme。"></a>1. 最好安装oh-my-zsh，方便看目前所在的分支，因为我们会在两个分支内操作。具体看官方github的readme。</h3><h3 id="2-最好用nvm安装node和npm，nodejs是node的发行版本，各个包管理器上都不一样，有可能有npm有可能没有，下了还要升级什么的很麻烦还可能有比如包版本的和依赖的各种错误"><a href="#2-最好用nvm安装node和npm，nodejs是node的发行版本，各个包管理器上都不一样，有可能有npm有可能没有，下了还要升级什么的很麻烦还可能有比如包版本的和依赖的各种错误" class="headerlink" title="2. 最好用nvm安装node和npm，nodejs是node的发行版本，各个包管理器上都不一样，有可能有npm有可能没有，下了还要升级什么的很麻烦还可能有比如包版本的和依赖的各种错误"></a>2. 最好用nvm安装node和npm，nodejs是node的发行版本，各个包管理器上都不一样，有可能有npm有可能没有，下了还要升级什么的很麻烦还可能有比如包版本的和依赖的各种错误</h3><h3 id="3-注意安装好node和npm后最好只cd在你的博客文件夹里操作，如npm-install-hexo-cli和npm-install-hexo-deployer-git，除了node和npm本体不要随便-g（全局安装），不要sudo（root用户操作）。"><a href="#3-注意安装好node和npm后最好只cd在你的博客文件夹里操作，如npm-install-hexo-cli和npm-install-hexo-deployer-git，除了node和npm本体不要随便-g（全局安装），不要sudo（root用户操作）。" class="headerlink" title="3. 注意安装好node和npm后最好只cd在你的博客文件夹里操作，如npm install hexo-cli和npm install hexo-deployer-git，除了node和npm本体不要随便-g（全局安装），不要sudo（root用户操作）。"></a>3. 注意安装好node和npm后最好只cd在你的博客文件夹里操作，如npm install hexo-cli和npm install hexo-deployer-git，除了node和npm本体不要随便-g（全局安装），不要sudo（root用户操作）。</h3><h3 id="4-如果哪里有node报错的话npm-init-y（-y即全默认）一下生成packge-json文件可能会有用（超脱范畴了好像）"><a href="#4-如果哪里有node报错的话npm-init-y（-y即全默认）一下生成packge-json文件可能会有用（超脱范畴了好像）" class="headerlink" title="4. 如果哪里有node报错的话npm init -y（-y即全默认）一下生成packge.json文件可能会有用（超脱范畴了好像）"></a>4. <del>如果哪里有node报错的话npm init -y（-y即全默认）一下生成packge.json文件可能会有用</del>（超脱范畴了好像）</h3><h3 id="5-如果你不是同时需要三台或者更多的系统的话，最好找一台真正的电脑安装linux，虚拟机是真的不方便，笔记本双系统兼容性又看脸。"><a href="#5-如果你不是同时需要三台或者更多的系统的话，最好找一台真正的电脑安装linux，虚拟机是真的不方便，笔记本双系统兼容性又看脸。" class="headerlink" title="5. 如果你不是同时需要三台或者更多的系统的话，最好找一台真正的电脑安装linux，虚拟机是真的不方便，笔记本双系统兼容性又看脸。"></a>5. 如果你不是同时需要三台或者更多的系统的话，最好找一台真正的电脑安装linux，虚拟机是真的不方便，笔记本双系统兼容性又看脸。</h3><pre><code>主流虚拟机应用1.Hyper-v装windows效率可以，装图形界面的linux卡的一批而且1803之后不再支持remoteFX就是gpu虚化。2.vm station一堆小毛病，而且卡顿也是有的。完全不能跟直接装系统比。
-</code></pre><hr>
+<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="0-不要随便sudo，真的会有很多麻烦。不要问我怎么知道的。"><a href="#0-不要随便sudo，真的会有很多麻烦。不要问我怎么知道的。" class="headerlink" title="0. 不要随便sudo，真的会有很多麻烦。不要问我怎么知道的。"></a>0. 不要随便sudo，真的会有很多麻烦。<del>不要问我怎么知道的。</del></h3><p>比如：一般默认是无法以root用户直接登录图形界面的，意味着用sudo创建的文件只能用命令行sudo权限来编辑，且用root登录图形界面，只会变得更麻烦。</p>
+<h3 id="1-最好安装oh-my-zsh，方便看目前所在的分支，因为我们会在两个分支内操作。具体看官方github的readme。"><a href="#1-最好安装oh-my-zsh，方便看目前所在的分支，因为我们会在两个分支内操作。具体看官方github的readme。" class="headerlink" title="1. 最好安装oh-my-zsh，方便看目前所在的分支，因为我们会在两个分支内操作。具体看官方github的readme。"></a>1. 最好安装oh-my-zsh，方便看目前所在的分支，因为我们会在两个分支内操作。具体看官方github的readme。</h3><h3 id="2-最好用nvm安装node和npm，nodejs是node的发行版本，各个包管理器上都不一样，有可能有npm有可能没有，下了还要升级什么的很麻烦还可能有比如包版本的和依赖的各种错误"><a href="#2-最好用nvm安装node和npm，nodejs是node的发行版本，各个包管理器上都不一样，有可能有npm有可能没有，下了还要升级什么的很麻烦还可能有比如包版本的和依赖的各种错误" class="headerlink" title="2. 最好用nvm安装node和npm，nodejs是node的发行版本，各个包管理器上都不一样，有可能有npm有可能没有，下了还要升级什么的很麻烦还可能有比如包版本的和依赖的各种错误"></a>2. 最好用nvm安装node和npm，nodejs是node的发行版本，各个包管理器上都不一样，有可能有npm有可能没有，下了还要升级什么的很麻烦还可能有比如包版本的和依赖的各种错误</h3><h3 id="3-注意安装好node和npm后最好只cd在你的博客文件夹里操作，如npm-install-hexo-cli和npm-install-hexo-deployer-git，除了node和npm本体不要随便-g（全局安装），不要sudo（root用户操作）。"><a href="#3-注意安装好node和npm后最好只cd在你的博客文件夹里操作，如npm-install-hexo-cli和npm-install-hexo-deployer-git，除了node和npm本体不要随便-g（全局安装），不要sudo（root用户操作）。" class="headerlink" title="3. 注意安装好node和npm后最好只cd在你的博客文件夹里操作，如npm install hexo-cli和npm install hexo-deployer-git，除了node和npm本体不要随便-g（全局安装），不要sudo（root用户操作）。"></a>3. 注意安装好node和npm后最好只cd在你的博客文件夹里操作，如npm install hexo-cli和npm install hexo-deployer-git，除了node和npm本体不要随便-g（全局安装），不要sudo（root用户操作）。</h3><h3 id="4-如果哪里有node报错的话npm-init-y（-y即全默认）一下生成packge-json文件可能会有用（超脱范畴了好像）"><a href="#4-如果哪里有node报错的话npm-init-y（-y即全默认）一下生成packge-json文件可能会有用（超脱范畴了好像）" class="headerlink" title="4. 如果哪里有node报错的话npm init -y（-y即全默认）一下生成packge.json文件可能会有用（超脱范畴了好像）"></a>4. <del>如果哪里有node报错的话npm init -y（-y即全默认）一下生成packge.json文件可能会有用</del>（超脱范畴了好像）</h3><h3 id="5-如果你不是同时需要三台或者更多的系统的话，最好找一台真正的电脑安装linux，虚拟机是真的不方便，笔记本双系统兼容性又看脸。"><a href="#5-如果你不是同时需要三台或者更多的系统的话，最好找一台真正的电脑安装linux，虚拟机是真的不方便，笔记本双系统兼容性又看脸。" class="headerlink" title="5. 如果你不是同时需要三台或者更多的系统的话，最好找一台真正的电脑安装linux，虚拟机是真的不方便，笔记本双系统兼容性又看脸。"></a>5. 如果你不是同时需要三台或者更多的系统的话，最好找一台真正的电脑安装linux，虚拟机是真的不方便，笔记本双系统兼容性又看脸。</h3><p>主流虚拟机应用1.Hyper-v装windows效率可以，装图形界面的linux卡的一批而且1803之后不再支持remoteFX就是gpu虚化。2.vm station一堆小毛病，而且卡顿也是有的。完全不能跟直接装系统比。</p>
+<hr>
 <h2 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h2><p><strong>（自定义博客的操作推荐在备份推送到github相应分支后确认无误后再做<del>方便报错重来</del>）</strong></p>
-<h2 id="0-准备"><a href="#0-准备" class="headerlink" title="0. 准备"></a>0. <strong>准备</strong></h2><p>=&gt;百度一篇合适的hexo+github建博客文章并且完全读懂，安装nvm然后用nvm安装node和npm，安装好git hexo hexo-deployer-git，申请好github账号建立博客仓库等等，并且一定记得把ssh密钥生成了然后挂到github</p>
-<h2 id="1-hexo-init"><a href="#1-hexo-init" class="headerlink" title="1. hexo init "></a>1. hexo init <figure class="highlight plain"><figcaption><span>name>```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">下载hexo模板博客，名字叫```&lt;a name&gt;```。</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">	//最好不要加sudo前缀，会导致无法直接在图形界面操作。</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">## 2. 下载主题，如next</span><br><span class="line"></span><br><span class="line">下载next到theme目录，进入theme/next文件夹，删除此目录下的.git .github .gitignore三个文件</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">	//留下这些文件会导致嵌套git的问题，且博客主题文件的修改大都是在这个文件夹下完成的，这里是我们备份的主要目标</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">## 3. cd ```&lt;a name&gt;</span><br></pre></td></tr></table></figure></h2><blockquote>
-<blockquote>
-<blockquote>
-</blockquote>
-<pre><code>//进入目录
-</code></pre><blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="4-git-init"><a href="#4-git-init" class="headerlink" title="4. git init"></a>4. git init</h2><blockquote>
-<blockquote>
-<blockquote>
-</blockquote>
-<pre><code>//这是在此文件夹里面初始化git，生成各种git文件文件夹，生成master分支，master分支内容为当前文件夹中除去.gitignore标记的内容的内容
-</code></pre><blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="5-（可选）在"><a href="#5-（可选）在" class="headerlink" title="5. （可选）在"></a>5. （可选）在<figure class="highlight plain"><figcaption><span>name>```目录里面检查/更改.gitignore文件</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">## 6. 在```&lt;a name&gt;```目录git branch查看分支，注意：使用oh-my-zsh的话git branch操作出来的可能是用vi打开的的一个文件</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">	//康康有没有master这个分支，如果什么都没有就</span><br><span class="line">	//git add . </span><br><span class="line">	//将工作区的文件提交至暂存区(提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件</span><br><span class="line">	//git commit -m &quot;&lt;这里写提交说明&gt;&quot;</span><br><span class="line">	//暂存区提交到所属分支</span><br><span class="line">	//如果还没有请删除重做，这步成功后应该显示当前仅有且位于master分支</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">## 7. 照着0步找的其他博客配置，然后hexo g hexo s，都没有错误后关闭终端上的本地服务，hexo d，确保可以成功上传</span><br><span class="line"></span><br><span class="line">## 8. 回到```&lt;a name&gt;```目录，创建新分支back-up：git branch back-up</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">	//不一定必须叫back-up，只是比较好认</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">## 9. 转到back-up分支：git checkout back-up</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">	//这两个命令可以合并为：git checkout -b back-up ，不过还是建议一开始能详细就详细一点分开写</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">## 10. 检查分支：git branch</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">	//显示两个分支master和back-up且当前在back-up分支</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">## 11. 让git链接到github上的远程仓库：git remote add ```&lt;name&gt; &lt;your url&gt;</span><br></pre></td></tr></table></figure></h2><blockquote>
-<blockquote>
-<blockquote>
-</blockquote>
-<pre><code>//&lt;your url&gt;是你的仓库的git链接，下面例子用的是https地址。&lt;name&gt;为仓库git地址的别名。
-//这步之后以后就可以用&lt;name&gt;代替&lt;your url&gt;了。
-//使用git remote查看已链接的仓库
-//这里格式如：git remote add origin https://github.com/xxx/xxx.github.io.git
-</code></pre><blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="12-推送back-up分支：git-push-u-lt-name-gt-back-up"><a href="#12-推送back-up分支：git-push-u-lt-name-gt-back-up" class="headerlink" title="12. 推送back-up分支：git push -u &lt;name&gt; back-up"></a>12. 推送back-up分支：git push -u <code>&lt;name&gt;</code> back-up</h2><blockquote>
-<blockquote>
-<blockquote>
-</blockquote>
-<pre><code>//&lt;name&gt;即11步创建的别名
-//此命令将本地的back-up分支推送到&lt;name&gt;链接的主机，并且新建back-up分支（如果原来仓库没有的话）
-//同时指定&lt;name&gt;为默认主机，后面就可以不加任何参数使用git push了
-//不带任何参数的git push，默认只推送当前分支，称为simple方式，而且如果没有执行12命令之前git push会提示没有推送目标
-//此步执行后需要你输入github用户名（上一步里面的xxx）和密码
-</code></pre><blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="13-到此和github仓库的链接备份初始处理结束，以后备份时到back-up分支执行git-push就可以"><a href="#13-到此和github仓库的链接备份初始处理结束，以后备份时到back-up分支执行git-push就可以" class="headerlink" title="13. 到此和github仓库的链接备份初始处理结束，以后备份时到back-up分支执行git push就可以"></a>13. 到此和github仓库的链接备份初始处理结束，以后备份时到back-up分支执行git push就可以</h2><blockquote>
-<blockquote>
-<blockquote>
-</blockquote>
-<pre><code>//当然也可以git add . 、git commit -m &quot;&quot; 、git push &lt;name&gt; back-up来提交
-//注意：不要在master分支提交，master应该是博客页面文件存放的地方
-//如果是失误在master分支打入git push命令没有关系，因为我们并没有在master分支git push -u过，git只会提示没有推送目标
-</code></pre><blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h2 id="0-准备"><a href="#0-准备" class="headerlink" title="0. 准备"></a>0. <strong>准备</strong></h2><p>百度一篇合适的hexo+github建博客文章并且完全读懂，安装nvm然后用nvm安装node和npm，安装好git hexo hexo-deployer-git，申请好github账号建立博客仓库等等，并且一定记得把ssh密钥生成了然后挂到github</p>
+<h2 id="1-hexo-init-aname"><a href="#1-hexo-init-aname" class="headerlink" title="1. hexo init aname"></a>1. hexo init <code>aname</code></h2><p>下载hexo模板博客，名字叫<code>aname</code>。<br>最好不要加sudo前缀，会导致无法直接在图形界面操作。</p>
+<h2 id="2-下载主题，如next"><a href="#2-下载主题，如next" class="headerlink" title="2. 下载主题，如next"></a>2. 下载主题，如next</h2><p>下载next到theme目录，进入theme/next文件夹，删除此目录下的.git .github .gitignore三个文件<br>留下这些文件会导致嵌套git的问题，且博客主题文件的修改大都是在这个文件夹下完成的，这里是我们备份的主要目标</p>
+<h2 id="3-cd-aname"><a href="#3-cd-aname" class="headerlink" title="3. cd aname"></a>3. cd <code>aname</code></h2><p>进入目录</p>
+<h2 id="4-git-init"><a href="#4-git-init" class="headerlink" title="4. git init"></a>4. git init</h2><p>这是在此文件夹里面初始化git，生成各种git文件文件夹，生成master分支，master分支内容为当前文件夹中除去.gitignore标记的内容的内容</p>
+<h2 id="5-（可选）在aname目录里面检查-更改-gitignore文件"><a href="#5-（可选）在aname目录里面检查-更改-gitignore文件" class="headerlink" title="5. （可选）在aname目录里面检查/更改.gitignore文件"></a>5. （可选）在<code>aname</code>目录里面检查/更改.gitignore文件</h2><h2 id="6-在aname目录git-branch查看分支，注意：使用oh-my-zsh的话git-branch操作出来的可能是用vi打开的的一个文件"><a href="#6-在aname目录git-branch查看分支，注意：使用oh-my-zsh的话git-branch操作出来的可能是用vi打开的的一个文件" class="headerlink" title="6. 在aname目录git branch查看分支，注意：使用oh-my-zsh的话git branch操作出来的可能是用vi打开的的一个文件"></a>6. 在<code>aname</code>目录git branch查看分支，注意：使用oh-my-zsh的话git branch操作出来的可能是用vi打开的的一个文件</h2><p>康康有没有master这个分支，如果什么都没有就<br>git add .<br>将工作区的文件提交至暂存区(提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件)<br>git commit -m “&lt;这里写提交说明&gt;”<br>暂存区提交到所属分支<br>如果还没有请删除重做，这步成功后应该显示当前仅有且位于master分支</p>
+<h2 id="7-照着0步找的其他博客配置，然后hexo-g-hexo-s，都没有错误后关闭终端上的本地服务，hexo-d，确保可以成功上传"><a href="#7-照着0步找的其他博客配置，然后hexo-g-hexo-s，都没有错误后关闭终端上的本地服务，hexo-d，确保可以成功上传" class="headerlink" title="7. 照着0步找的其他博客配置，然后hexo g hexo s，都没有错误后关闭终端上的本地服务，hexo d，确保可以成功上传"></a>7. 照着0步找的其他博客配置，然后hexo g hexo s，都没有错误后关闭终端上的本地服务，hexo d，确保可以成功上传</h2><h2 id="8-回到aname目录，创建新分支back-up：git-branch-back-up"><a href="#8-回到aname目录，创建新分支back-up：git-branch-back-up" class="headerlink" title="8. 回到aname目录，创建新分支back-up：git branch back-up"></a>8. 回到<code>aname</code>目录，创建新分支back-up：git branch back-up</h2><p>不一定必须叫back-up，只是比较好认</p>
+<h2 id="9-转到back-up分支：git-checkout-back-up"><a href="#9-转到back-up分支：git-checkout-back-up" class="headerlink" title="9. 转到back-up分支：git checkout back-up"></a>9. 转到back-up分支：git checkout back-up</h2><p>这两个命令可以合并为：git checkout -b back-up ，不过还是建议一开始能详细就详细一点分开写</p>
+<h2 id="10-检查分支：git-branch"><a href="#10-检查分支：git-branch" class="headerlink" title="10. 检查分支：git branch"></a>10. 检查分支：git branch</h2><p>显示两个分支master和back-up且当前在back-up分支</p>
+<h2 id="11-让git链接到github上的远程仓库：git-remote-add-name-yoururl"><a href="#11-让git链接到github上的远程仓库：git-remote-add-name-yoururl" class="headerlink" title="11. 让git链接到github上的远程仓库：git remote add name yoururl"></a>11. 让git链接到github上的远程仓库：git remote add <code>name</code> <code>yoururl</code></h2><p><code>yoururl</code>是你的仓库的git链接，下面例子用的是https地址。<code>name</code>为仓库git地址的别名。<br>这步之后以后就可以用<code>name</code>代替<code>yoururl</code>了。<br>使用git remote查看已链接的仓库<br>这里格式如：git remote add origin <a href="https://github.com/xxx/xxx.github.io.git" target="_blank" rel="noopener">https://github.com/xxx/xxx.github.io.git</a></p>
+<h2 id="12-推送back-up分支：git-push-u-name-back-up"><a href="#12-推送back-up分支：git-push-u-name-back-up" class="headerlink" title="12. 推送back-up分支：git push -u name back-up"></a>12. 推送back-up分支：git push -u <code>name</code> back-up</h2><p><code>name</code>即11步创建的别名。此命令将本地的back-up分支推送到<code>name</code>链接的主机，并且新建back-up分支（如果原来仓库没有的话），同时指定<code>name</code>为默认主机，后面就可以不加任何参数使用git push了。不带任何参数的git push，默认只推送当前分支，称为simple方式，而且如果没有执行12命令之前git push会提示没有推送目标。另外此步执行后需要你输入github用户名（上一步里面的xxx）和密码。</p>
+<h2 id="13-到此和github仓库的链接备份初始处理结束，以后备份时到back-up分支执行git-push就可以"><a href="#13-到此和github仓库的链接备份初始处理结束，以后备份时到back-up分支执行git-push就可以" class="headerlink" title="13. 到此和github仓库的链接备份初始处理结束，以后备份时到back-up分支执行git push就可以"></a>13. 到此和github仓库的链接备份初始处理结束，以后备份时到back-up分支执行git push就可以</h2><p>当然也可以git add . 、git commit -m “” 、git push <code>name</code> back-up来提交<br>注意：不要在master分支提交，master应该是博客页面文件存放的地方<br>如果是失误在master分支打入git push命令没有关系，因为我们并没有在master分支git push -u过，git只会提示没有推送目标</p>
 
           
         
@@ -754,7 +711,7 @@ Edge：win10
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/05/07/testVideoMD/" class="post-title-link" itemprop="url">testVideoMD</a>
+                <a href="/2019/05/07/testVideoMD/" class="post-title-link" itemprop="url">外链B站视频：保持大小与纵横比</a>
               
             
           </h1>
@@ -779,12 +736,24 @@ Edge：win10
                 
               
 
-              <time title="创建时间：2019-05-07 20:36:01 / 修改时间：21:23:09" itemprop="dateCreated datePublished" datetime="2019-05-07T20:36:01+08:00">2019-05-07</time>
+              <time title="创建时间：2019-05-07 20:36:01" itemprop="dateCreated datePublished" datetime="2019-05-07T20:36:01+08:00">2019-05-07</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 19:30:46" itemprop="dateModified" datetime="2019-05-09T19:30:46+08:00">2019-05-09</time>
               
             
           </span>
@@ -841,7 +810,9 @@ Edge：win10
 }
 </style>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">上面这种：</span><br><span class="line">&lt;div class=&quot;aspect-ratio&quot;&gt;</span><br><span class="line">  &lt;iframe src=&quot;//player.bilibili.com/player.html?aid=13379801&amp;cid=21925894&amp;page=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"> </span><br><span class="line">&lt;style&gt;</span><br><span class="line">/* 这个规则规定了iframe父元素容器的尺寸，我们要求它的宽高比应该是 25:14 */</span><br><span class="line">.aspect-ratio &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 0;</span><br><span class="line">  padding-bottom: 56%; /* 高度应该是宽度的56% */</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">/* 设定iframe的宽度和高度，让iframe占满整个父元素容器 */</span><br><span class="line">.aspect-ratio iframe &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 100%;</span><br><span class="line">  left: 0;</span><br><span class="line">  top: 0;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">另外一种：</span><br><span class="line">&lt;iframe id=&apos;video&apos; src=&quot;//player.bilibili.com/player.html?aid=13379801&amp;cid=21925894&amp;page=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; width=100%&gt; &lt;/iframe&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">document.getElementById(&quot;video&quot;).style.height=document.getElementById(&quot;video&quot;).scrollWidth*0.75+&quot;px&quot;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-上面这种："><a href="#1-上面这种：" class="headerlink" title="1. 上面这种："></a>1. 上面这种：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;aspect-ratio&quot;&gt;</span><br><span class="line">  &lt;iframe src=&quot;//player.bilibili.com/player.html?aid=13379801&amp;cid=21925894&amp;page=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"> </span><br><span class="line">&lt;style&gt;</span><br><span class="line">/* 这个规则规定了iframe父元素容器的尺寸，我们要求它的宽高比应该是 25:14 */</span><br><span class="line">.aspect-ratio &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 0;</span><br><span class="line">  padding-bottom: 56%; /* 高度应该是宽度的56% */</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">/* 设定iframe的宽度和高度，让iframe占满整个父元素容器 */</span><br><span class="line">.aspect-ratio iframe &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 100%;</span><br><span class="line">  left: 0;</span><br><span class="line">  top: 0;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-另外一种："><a href="#2-另外一种：" class="headerlink" title="2. 另外一种："></a>2. 另外一种：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe id=&apos;video&apos; src=&quot;//player.bilibili.com/player.html?aid=13379801&amp;cid=21925894&amp;page=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; width=100%&gt; &lt;/iframe&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">document.getElementById(&quot;video&quot;).style.height=document.getElementById(&quot;video&quot;).scrollWidth*0.75+&quot;px&quot;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
           
         

@@ -99,17 +99,17 @@
 
 
 
-  <meta name="description" content="N2N简易食用指南简介：1. N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。 2. N2N是基于P2P协议之上的两个私有网络间的加密层。 3. 加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。 4. 每个n2n用户可以同时隶属于多个网络 N2N架构组件：1. Supernode：超级节点     它在edge节点间建立握手，或为位于">
+  <meta name="description" content="N2N简易食用指南简介： N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。 N2N是基于P2P协议之上的两个私有网络间的加密层。 加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。 每个n2n用户可以同时隶属于多个网络  N2N架构组件： Supernode：超级节点它在edge节点间建立握手，或为位于防火墙之后的节点中转数据。它的基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="centos6-supernode.md">
+<meta property="og:title" content="N2N简易食用指南">
 <meta property="og:url" content="http://yoursite.com/2019/05/09/centos6-supernode/index.html">
 <meta property="og:site_name" content="The 3rd Try">
-<meta property="og:description" content="N2N简易食用指南简介：1. N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。 2. N2N是基于P2P协议之上的两个私有网络间的加密层。 3. 加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。 4. 每个n2n用户可以同时隶属于多个网络 N2N架构组件：1. Supernode：超级节点     它在edge节点间建立握手，或为位于">
+<meta property="og:description" content="N2N简易食用指南简介： N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。 N2N是基于P2P协议之上的两个私有网络间的加密层。 加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。 每个n2n用户可以同时隶属于多个网络  N2N架构组件： Supernode：超级节点它在edge节点间建立握手，或为位于防火墙之后的节点中转数据。它的基础">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-09T06:10:25.115Z">
+<meta property="og:updated_time" content="2019-05-09T11:29:20.440Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="centos6-supernode.md">
-<meta name="twitter:description" content="N2N简易食用指南简介：1. N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。 2. N2N是基于P2P协议之上的两个私有网络间的加密层。 3. 加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。 4. 每个n2n用户可以同时隶属于多个网络 N2N架构组件：1. Supernode：超级节点     它在edge节点间建立握手，或为位于">
+<meta name="twitter:title" content="N2N简易食用指南">
+<meta name="twitter:description" content="N2N简易食用指南简介： N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。 N2N是基于P2P协议之上的两个私有网络间的加密层。 加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。 每个n2n用户可以同时隶属于多个网络  N2N架构组件： Supernode：超级节点它在edge节点间建立握手，或为位于防火墙之后的节点中转数据。它的基础">
 
 
 
@@ -127,7 +127,7 @@
   };
 </script>
 
-  <title>centos6-supernode.md | The 3rd Try</title>
+  <title>N2N简易食用指南 | The 3rd Try</title>
   
 
 
@@ -320,7 +320,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">centos6-supernode.md
+          <h1 class="post-title" itemprop="name headline">N2N简易食用指南
 
               
             
@@ -346,7 +346,7 @@
                 
               
 
-              <time title="创建时间：2019-05-09 14:08:26 / 修改时间：14:10:25" itemprop="dateCreated datePublished" datetime="2019-05-09T14:08:26+08:00">2019-05-09</time>
+              <time title="创建时间：2019-05-09 14:08:26 / 修改时间：19:29:20" itemprop="dateCreated datePublished" datetime="2019-05-09T14:08:26+08:00">2019-05-09</time>
             
 
             
@@ -385,64 +385,74 @@
       
 
       
-        <h1 id="N2N简易食用指南"><a href="#N2N简易食用指南" class="headerlink" title="N2N简易食用指南"></a>N2N简易食用指南</h1><h2 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h2><pre><code>1. N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。
-2. N2N是基于P2P协议之上的两个私有网络间的加密层。
-3. 加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。
-4. 每个n2n用户可以同时隶属于多个网络
-</code></pre><h2 id="N2N架构组件："><a href="#N2N架构组件：" class="headerlink" title="N2N架构组件："></a>N2N架构组件：</h2><pre><code>1. Supernode：超级节点
-    它在edge节点间建立握手，或为位于防火墙之后的节点中转数据。它的基础作用是注册节点的网络路径，并为不能直通的节点做路由，能够直通的节点间通信，是P2P的。
-2. Edge：边缘（节点）
-    用户PC机上安装的用于建立n2n网络的软件。几乎每个edge节点都会建立一个tun/tap设备，作为接入n2n网络的入口。
-原理：super node提供场所，让两个位于NAT/防火墙之后的edge node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge node之间，如果有一方的NAT属于对称型(symmetrical)，supernode则还需继续为双方提供数据包的转发;edge node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。
-</code></pre><h2 id="源码地址："><a href="#源码地址：" class="headerlink" title="源码地址："></a>源码地址：</h2><pre><code>https://github.com/meyerd/n2n.git
-
-注1：此源码地址为n2n的开发分支，meyerd/n2n，官方即ntop/n2n的源码是不能编译的，因为部分源文件被放到了legacy文件夹，而CMakeList.txt文件里还包含有部分这些文件（应该是还在开发）所以make会报错，而meyerd/n2n没有这种问题。
-
-注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。
-
-注3：n2n目前有v1 v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。
-</code></pre><h2 id="本人使用环境："><a href="#本人使用环境：" class="headerlink" title="本人使用环境："></a>本人使用环境：</h2><pre><code>Supernode：vultr上的64位centos6
-Edge：win10
-</code></pre><h2 id="配置Supernode端："><a href="#配置Supernode端：" class="headerlink" title="配置Supernode端："></a>配置Supernode端：</h2><pre><code>1. 建立或者使用已有的vps，然后用Xshell或者JuiceSSH连接到vps
-2. yum install gcc gcc-c++ openssl-devel git cmake
-3. 下载源码
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/meyerd/n2n.git</span><br></pre></td></tr></table></figure>
-<pre><code>4. 编译安装：
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">		cd n2n/n2n_v2</span><br><span class="line">		mkdir build</span><br><span class="line">		cd build</span><br><span class="line">		cmake ..</span><br><span class="line">		make</span><br><span class="line">	//不install也行，不过需要在n2n/n2n_v2/build文件夹里面运行，而且要加./前缀</span><br><span class="line">	//如./supernode -l 5000</span><br><span class="line">		make install</span><br><span class="line">		cd</span><br><span class="line">```		</span><br><span class="line"></span><br><span class="line">	5. 测试下能不能开启Supernode服务：</span><br></pre></td></tr></table></figure>
-<pre><code>    supernode -l 5000 -f
-//-f为前台运行，关闭终端或ctrl+c来停止服务
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">6. 开放端口：</span><br></pre></td></tr></table></figure>
-<pre><code>    /sbin/iptables -I INPUT -p tcp --dport 5000 -j ACCEPT
-    /sbin/iptables -I INPUT -p udp --dport 5000 -j ACCEPT
-    /sbin/iptables -I INPUT -p udp --dport 5645 -j ACCEPT
-//5645换成53也行，原理暂时不明
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">7. 查看端口状态：</span><br></pre></td></tr></table></figure>
-<pre><code>/etc/init.d/iptables status
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">8. 保存端口设置：</span><br></pre></td></tr></table></figure>
-<pre><code>    /etc/rc.d/init.d/iptables save
-//不保存也行，不过每次重启都要再次开放端口
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">	9. 开启supernode：</span><br><span class="line">	</span><br><span class="line">```	</span><br><span class="line">		cd n2n/n2n_v2/build</span><br><span class="line">		./supernode 5000</span><br></pre></td></tr></table></figure>
-<pre><code>10. （可选）在服务器上开启edge：
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./edge -a 10.0.0.0 -c 群组名 -k 此处密码 -l supernode的IP地址:5000</span><br></pre></td></tr></table></figure>
-<h2 id="配置Edge端："><a href="#配置Edge端：" class="headerlink" title="配置Edge端："></a>配置Edge端：</h2><pre><code>1. 我用的是GitHub Desktop，所以这里直接把n2n源码clone下来，你也可以去直接下载zip包
-
-2. 编译：
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	cd E:\github\n2n_meyerd\n2n_v2</span><br><span class="line">	md build</span><br><span class="line">	cmake ..</span><br><span class="line">//cmake这步也可以用Cmake-GUI代替</span><br><span class="line"></span><br><span class="line">//注：由于种种原因微软vs中的MSBuild在Powershell下的操作默认是不开放的，</span><br><span class="line">//默认情况下只能在Developer command prompt中使用（在开始菜单的vs项目里面），</span><br><span class="line">//而配置Powershell下使用也会很麻烦，所以不推荐使用。</span><br><span class="line"></span><br><span class="line">	打开build文件夹中的n2n.sln</span><br><span class="line">	生成项目ALL_BUILD</span><br><span class="line">	生成完成之后就可以在Release文件夹中看到edge.exe和supernode.exe等文件了</span><br><span class="line"></span><br><span class="line">//~~没卵用的题外话：官方即ntop/n2n的源码cmake时会报错，请关闭CMakeList.txt文件中的ssl~~</span><br></pre></td></tr></table></figure>
-<pre><code>3. win10（最好在管理员限权）powershell开启edge：
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd E:\github\n2n_meyerd\n2n_v2\build\Release</span><br><span class="line">.\edge -a 10.0.0.100 -c 群组名 -k 此处密码 -l supernode的IP地址:5000</span><br></pre></td></tr></table></figure>
-<h2 id="至于命令的用法："><a href="#至于命令的用法：" class="headerlink" title="至于命令的用法："></a>至于命令的用法：</h2><pre><code>1.
-    sudo ./edge -d n2n0 -c mynetwork -k encryptme -u 99 -g 99 -m 3C:A0:12:34:56:78 -a 1.2.3.4 -l a.b.c.d:xyw
-    或者
-    N2N_KEY=encryptme sudo ./edge -d n2n0 -c mynetwork -u 99 -g 99 -m 3C:A0:12:34:56:78 -a 1.2.3.4 -l a.b.c.d:xyw
-
-2. you can join a private network with your friends by:
-    1.same -l parameter, connect to same a supernode
-    2.same -c and -k parameters, you can understand as &quot;open same a lock with the same key&quot;
-    3.difference -a parameter, also difference -m parameter if you specified
-    4.difference -d parameter with your local existed network interface card
-
-3. 注意在powershell下 ./ 要用 .\ 代替
-</code></pre><h2 id="请参考："><a href="#请参考：" class="headerlink" title="请参考："></a>请参考：</h2><pre><code>1. https://github.com/meyerd/n2n/wiki/run
+        <h1 id="N2N简易食用指南"><a href="#N2N简易食用指南" class="headerlink" title="N2N简易食用指南"></a>N2N简易食用指南</h1><h2 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h2><ol>
+<li>N2N是一款开源的软件，作者是著名的开源网管软件ntop的作者Luca Deri。</li>
+<li>N2N是基于P2P协议之上的两个私有网络间的加密层。</li>
+<li>加密是在edge节点上执行的，使用开放的协议，用户自己定义密钥，过程完全自治。</li>
+<li>每个n2n用户可以同时隶属于多个网络</li>
+</ol>
+<h2 id="N2N架构组件："><a href="#N2N架构组件：" class="headerlink" title="N2N架构组件："></a>N2N架构组件：</h2><ol>
+<li>Supernode：超级节点<br>它在edge节点间建立握手，或为位于防火墙之后的节点中转数据。它的基础作用是注册节点的网络路径，并为不能直通的节点做路由，能够直通的节点间通信，是P2P的。</li>
+<li>Edge：边缘（节点）<br>用户PC机上安装的用于建立n2n网络的软件。几乎每个edge节点都会建立一个tun/tap设备，作为接入n2n网络的入口。<h3 id="原理：super-node提供场所，让两个位于NAT-防火墙之后的edge-node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge-node之间，如果有一方的NAT属于对称型-symmetrical-，supernode则还需继续为双方提供数据包的转发-edge-node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。"><a href="#原理：super-node提供场所，让两个位于NAT-防火墙之后的edge-node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge-node之间，如果有一方的NAT属于对称型-symmetrical-，supernode则还需继续为双方提供数据包的转发-edge-node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。" class="headerlink" title="原理：super node提供场所，让两个位于NAT/防火墙之后的edge node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge node之间，如果有一方的NAT属于对称型(symmetrical)，supernode则还需继续为双方提供数据包的转发;edge node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。"></a>原理：super node提供场所，让两个位于NAT/防火墙之后的edge node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge node之间，如果有一方的NAT属于对称型(symmetrical)，supernode则还需继续为双方提供数据包的转发;edge node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。</h3></li>
+</ol>
+<h2 id="源码地址："><a href="#源码地址：" class="headerlink" title="源码地址："></a>源码地址：</h2><h3 id="https-github-com-meyerd-n2n-git"><a href="#https-github-com-meyerd-n2n-git" class="headerlink" title="https://github.com/meyerd/n2n.git"></a><code>https://github.com/meyerd/n2n.git</code></h3><h4 id="注1：此源码地址为n2n的开发分支，meyerd-n2n，由于不明原因，官方即ntop-n2n的源码是不能编译的。"><a href="#注1：此源码地址为n2n的开发分支，meyerd-n2n，由于不明原因，官方即ntop-n2n的源码是不能编译的。" class="headerlink" title="注1：此源码地址为n2n的开发分支，meyerd/n2n，由于不明原因，官方即ntop/n2n的源码是不能编译的。"></a>注1：此源码地址为n2n的开发分支，meyerd/n2n，由于不明原因，官方即ntop/n2n的源码是不能编译的。</h4><h4 id="注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。"><a href="#注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。" class="headerlink" title="注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。"></a>注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。</h4><h4 id="注3：n2n目前有v1-v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。"><a href="#注3：n2n目前有v1-v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。" class="headerlink" title="注3：n2n目前有v1 v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。"></a>注3：n2n目前有v1 v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。</h4><h2 id="本人使用环境："><a href="#本人使用环境：" class="headerlink" title="本人使用环境："></a>本人使用环境：</h2><ol>
+<li>Supernode：vultr上的64位centos6</li>
+<li>Edge：win10</li>
+</ol>
+<h2 id="配置Supernode端："><a href="#配置Supernode端：" class="headerlink" title="配置Supernode端："></a>配置Supernode端：</h2><ol>
+<li>建立或者使用已有的vps，然后用Xshell或者JuiceSSH连接到vps</li>
+<li>yum install gcc gcc-c++ openssl-devel git cmake</li>
+<li><p>下载源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/meyerd/n2n.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译安装：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	cd n2n/n2n_v2</span><br><span class="line">	mkdir build</span><br><span class="line">	cd build</span><br><span class="line">	cmake ..</span><br><span class="line">	make</span><br><span class="line">//不install也行，不过需要在n2n/n2n_v2/build文件夹里面运行，而且要加./前缀</span><br><span class="line">//如./supernode -l 5000</span><br><span class="line">	make install</span><br><span class="line">	cd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试下能不能开启Supernode服务：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">	supernode -l 5000 -f</span><br><span class="line">//-f为前台运行，关闭终端或ctrl+c来停止服务</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开放端口：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">	/sbin/iptables -I INPUT -p tcp --dport 5000 -j ACCEPT</span><br><span class="line">	/sbin/iptables -I INPUT -p udp --dport 5000 -j ACCEPT</span><br><span class="line">	/sbin/iptables -I INPUT -p udp --dport 5645 -j ACCEPT</span><br><span class="line">//5645换成53也行，原理暂时不明</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看端口状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/iptables status</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保存端口设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">	/etc/rc.d/init.d/iptables save</span><br><span class="line">//不保存也行，不过每次重启都要再次开放端口</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启supernode：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd n2n/n2n_v2/build</span><br><span class="line">./supernode 5000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（可选）在服务器上开启edge：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./edge -a 10.0.0.0 -c 群组名 -k 此处密码 -l supernode的IP地址:5000</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="配置Edge端："><a href="#配置Edge端：" class="headerlink" title="配置Edge端："></a>配置Edge端：</h2><ol>
+<li>我用的是GitHub Desktop，所以这里直接把n2n源码clone下来，你也可以去直接下载zip包</li>
+<li>cmake（也可以用Cmake-GUI代替）：    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd E:\github\n2n_meyerd\n2n_v2</span><br><span class="line">md build</span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>注：由于种种原因微软vs中的MSBuild在Powershell下的操作默认是不开放的，默认情况下只能在Developer command prompt中使用（在开始菜单的vs项目里面），而配置Powershell下使用也会很麻烦，所以不推荐使用。</p>
+<ol start="3">
+<li>编译：<blockquote>
+</blockquote>
+<pre><code>打开build文件夹中的n2n.sln
+生成项目ALL_BUILD
+生成完成之后就可以在Release文件夹中看到edge.exe和supernode.exe等文件了
+</code></pre><blockquote>
+</blockquote>
+ //<del>没卵用的题外话：官方即ntop/n2n的源码cmake时会报错，请关闭CMakeList.txt文件中的ssl</del></li>
+<li>win10（最好在管理员限权）powershell开启edge：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd E:\github\n2n_meyerd\n2n_v2\build\Release</span><br><span class="line">.\edge -a 10.0.0.100 -c 群组名 -k 此处密码 -l supernode的IP地址:5000</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="至于命令的用法："><a href="#至于命令的用法：" class="headerlink" title="至于命令的用法："></a>至于命令的用法：</h2><h3 id="1-一般命令行用法："><a href="#1-一般命令行用法：" class="headerlink" title="1. 一般命令行用法："></a>1. 一般命令行用法：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ./edge -d n2n0 -c mynetwork -k encryptme -u 99 -g 99 -m 3C:A0:12:34:56:78 -a 1.2.3.4 -l a.b.c.d:xyw</span><br><span class="line">或者</span><br><span class="line">N2N_KEY=encryptme sudo ./edge -d n2n0 -c mynetwork -u 99 -g 99 -m 3C:A0:12:34:56:78 -a 1.2.3.4 -l a.b.c.d:xyw</span><br></pre></td></tr></table></figure>
+<h3 id="2-you-can-join-a-private-network-with-your-friends-by"><a href="#2-you-can-join-a-private-network-with-your-friends-by" class="headerlink" title="2. you can join a private network with your friends by:"></a>2. you can join a private network with your friends by:</h3><ol>
+<li>same -l parameter, connect to same a supernode</li>
+<li>same -c and -k parameters, you can understand as “open same a lock with the same key”</li>
+<li>difference -a parameter, also difference -m parameter if you specified</li>
+<li>difference -d parameter with your local existed network interface card</li>
+</ol>
+<h3 id="3-注意在powershell下-要用-代替"><a href="#3-注意在powershell下-要用-代替" class="headerlink" title="3. 注意在powershell下 ./ 要用 .\ 代替"></a>3. 注意在powershell下 ./ 要用 .\ 代替</h3><h2 id="请参考："><a href="#请参考：" class="headerlink" title="请参考："></a>请参考：</h2><pre><code>1. https://github.com/meyerd/n2n/wiki/run
 2. https://github.com/ntop/n2n
 3. https://www.baidu.com/
 </code></pre>
@@ -594,7 +604,7 @@ Edge：win10
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#N2N简易食用指南"><span class="nav-number">1.</span> <span class="nav-text">N2N简易食用指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介："><span class="nav-number">1.1.</span> <span class="nav-text">简介：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#N2N架构组件："><span class="nav-number">1.2.</span> <span class="nav-text">N2N架构组件：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码地址："><span class="nav-number">1.3.</span> <span class="nav-text">源码地址：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本人使用环境："><span class="nav-number">1.4.</span> <span class="nav-text">本人使用环境：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Supernode端："><span class="nav-number">1.5.</span> <span class="nav-text">配置Supernode端：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Edge端："><span class="nav-number">1.6.</span> <span class="nav-text">配置Edge端：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#至于命令的用法："><span class="nav-number">1.7.</span> <span class="nav-text">至于命令的用法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请参考："><span class="nav-number">1.8.</span> <span class="nav-text">请参考：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#N2N简易食用指南"><span class="nav-number">1.</span> <span class="nav-text">N2N简易食用指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介："><span class="nav-number">1.1.</span> <span class="nav-text">简介：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#N2N架构组件："><span class="nav-number">1.2.</span> <span class="nav-text">N2N架构组件：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理：super-node提供场所，让两个位于NAT-防火墙之后的edge-node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge-node之间，如果有一方的NAT属于对称型-symmetrical-，supernode则还需继续为双方提供数据包的转发-edge-node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。"><span class="nav-number">1.2.1.</span> <span class="nav-text">原理：super node提供场所，让两个位于NAT/防火墙之后的edge node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge node之间，如果有一方的NAT属于对称型(symmetrical)，supernode则还需继续为双方提供数据包的转发;edge node负责数据流的加解密。加密算法采用了twofish，开源、简便，处理速度快。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码地址："><span class="nav-number">1.3.</span> <span class="nav-text">源码地址：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#https-github-com-meyerd-n2n-git"><span class="nav-number">1.3.1.</span> <span class="nav-text">https://github.com/meyerd/n2n.git</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注1：此源码地址为n2n的开发分支，meyerd-n2n，由于不明原因，官方即ntop-n2n的源码是不能编译的。"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">注1：此源码地址为n2n的开发分支，meyerd/n2n，由于不明原因，官方即ntop/n2n的源码是不能编译的。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">注2：n2n源码没有包含gui应用程序，这里也没有提供，所以本文中介绍的全部关于使用n2n的操作都是命令行操作。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注3：n2n目前有v1-v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">注3：n2n目前有v1 v2两个版本，区别是v2安全性高一点。本文使用v2。使用时注意edge和supernode版本一致，最好同时git源码在本地编译。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本人使用环境："><span class="nav-number">1.4.</span> <span class="nav-text">本人使用环境：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Supernode端："><span class="nav-number">1.5.</span> <span class="nav-text">配置Supernode端：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Edge端："><span class="nav-number">1.6.</span> <span class="nav-text">配置Edge端：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#至于命令的用法："><span class="nav-number">1.7.</span> <span class="nav-text">至于命令的用法：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-一般命令行用法："><span class="nav-number">1.7.1.</span> <span class="nav-text">1. 一般命令行用法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-you-can-join-a-private-network-with-your-friends-by"><span class="nav-number">1.7.2.</span> <span class="nav-text">2. you can join a private network with your friends by:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-注意在powershell下-要用-代替"><span class="nav-number">1.7.3.</span> <span class="nav-text">3. 注意在powershell下 ./ 要用 .\ 代替</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请参考："><span class="nav-number">1.8.</span> <span class="nav-text">请参考：</span></a></li></ol></li></ol></div>
             
 
           </div>
