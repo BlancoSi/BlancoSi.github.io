@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-subpage/
-=======
 /subpage/doc/*
 /subpage/vid/*
 /subpage/mus/*
@@ -11,4 +8,4 @@ subpage/
 /subpage/treeVideo.html
 /subpage/treeResource.html
 /subpage/index.html
->>>>>>> parent of 6fcdfa1... Update .gitignore
+
