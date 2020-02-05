@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="./metro/metro-all.min.css" rel="stylesheet">
+    <script src="./metro/metro.min.js"></script>
+  </head>
+  <body>
+    <h1 class="text-center">On Construction Now</h1>
+    <h3 class="text-center">Using Metro 4</h3>
+    <div class="bg-grayBlue fg-white text-center">
+        Below is the test display.
+    </div>
+
+    <div class="img-container rounded">
+        <img src="./img/a.png">
+        <div class="image-overlay op-amber"></div>
+    </div>
+
+    <ul data-role="treeview" data-on-node-click="treeClick">
+        <li data-caption="Docs" data-collapsed="true">
+            <ul>
+                <li data-caption="Blender-2.18-docs-local" path="./doc/Blender2.81/index.html"></li>
+                <li data-caption="Unity-2019.2-docs-local" path="./doc/UnityEN/Manual/UnityManual.html"></li>
+                <li data-caption="CryEngine-docs-link" path="https://docs.cryengine.com/display/CEMANUAL/CRYENGINE+V+Manual"></li>
+                <li data-caption="UnrealEngine-docs-link" path="https://docs.unrealengine.com/zh-CN/index.html"></li>
+            </ul>
+        </li>
+        <li data-caption="Media" data-collapsed="true">
+            <ul>
+                <li data-caption="Music" data-collapsed="true">
+                    <ul>
+                        <!--#include file="treeMusic.html" -->
+                    </ul>
+                </li>
+                <li data-caption="Video" data-collapsed="true">
+                    <ul>
+                        <!--#include file="treeVideo.html" -->
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li data-caption="Resource" data-collapsed="true">
+            <ul>
+                <!--#include file="treeResource.html" -->
+            </ul>
+        </li>
+        <li data-caption="Posts" data-collapsed="true">
+            <ul>
+                    <!--#include file="treePosts.html" -->
+            </ul>
+        </li>
+    </ul>
+
+    <ul class="feed-list">
+        <li class="title remark primary">News Report</li>
+        <li>
+            <img class="avatar" src="./news/NEON.png">
+            <span class="label"><a href="https://www.cryengine.com/marketplace/product/neon-noir">Neon Noir Ray Tracing Benchmark OUT FOR DOWNLOAD</a></span>
+            <span class="second-label">2019/11/13</span>
+        </li>
+    </ul>
+
+<script>
+    function treeClick(node, tree){
+        var path = node.getAttribute("path");
+        var name = node.getAttribute("data-caption");
+        console.log(name);
+        if(path.search(".mp3") != -1 || path.search(".flac") != -1){window.open('./mus.html?'+path, 'newwindow', 'height=100, width=400, top=0,left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');}
+        else if(path.search(".mp4") != -1 || path.search(".mkv") != -1 || path.search(".rmvb") != -1 || path.search(".webm") != -1){window.open('./vid.html?'+path, 'newwindow', 'height=500, width=800, top=0,left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');}
+        else if(path.search(".md") != -1){window.open('./pos.html?'+path, 'newwindow', 'height=700, width=1000');}
+        else {window.open(path, 'newwindow');}
+    }
+</script>
+
+  </body>
+</html>
